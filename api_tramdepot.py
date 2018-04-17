@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 The API for the Tramdepot seasonal beers.
-Version 1.0.1
+Version 1.1
 Author Kevin Christen
 """
 from bs4 import BeautifulSoup
@@ -10,7 +10,7 @@ import html
 import json
 import re
 from urllib.parse import urljoin
-header = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'}
+header = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) - Tramdepot App Bot'}
 req = urllib.request.Request("https://www.altestramdepot.ch/de/home", headers=header)
 with urllib.request.urlopen(req) as url:
     s = url.read()
@@ -36,10 +36,7 @@ for i in range(0, len(div_news)):
         news_info_description_p_string = ""
         for p in news_info_description_all_p:
             news_info_description_p_string += str(p).replace("<p>", "").replace("<br/>", "\n").replace("</p>", "")
-
-
-        #news_info_description_p_string = str(news_info_description_p).replace("<p>", "").replace("<br/>", "\n").replace("</p>", "")
-            news_info_description_p_string_unescape = html.unescape(news_info_description_p_string)
+        news_info_description_p_string_unescape = html.unescape(news_info_description_p_string)
 
         #Fill values into string.
         entryJson = {"title" : titel_h2, "details" : news_info_h3, "litres_left" : news_info_fuellstand_stand_h3, "description": news_info_description_p_string_unescape, "litres_image" : news_info_fuellstand_img_src_joined}
